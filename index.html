@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="보름달이 뜨는 밤에만 문을 여는 우체국. 단편 애니메이션 달빛 우체국 소개 사이트.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>달빛 우체국</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Diphylleia&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&family=Nanum+Pen+Script&display=swap">
+<style>
+/* Layout: 항공우편 봉투 한 통. 밤 언덕 히어로 아래로 빨강·파랑 사선 띠가 흐르고, 본문은 왼쪽 정렬 한 단에 우표·엽서·봉투가 놓인다. */
+:root{
+  --paper:#eef1f5; --paper-2:#e2e7ef; --surface:#fafbfd;
+  --ink:#1b2438; --ink-soft:#56607a; --line:#cfd6e2;
+  --red:#c4383e; --blue:#2d58a3; --gold:#a87a1f;
+  --shade:rgba(27,36,56,.14);
+  --night:#0d1424; --on-night:#f3ead2; --on-night-soft:#c9c3b3;
+  --st-red:#a83238; --st-gold:#93681a; --st-blue:#284d8f;
+  --f-display:"Diphylleia","Song Myung","Nanum Myeongjo",serif;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-hand:"Nanum Pen Script","Gaegu",cursive;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --gutter:clamp(16px,4vw,40px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0f1626; --paper-2:#141d32; --surface:#1a2440;
+  --ink:#e7ebf3; --ink-soft:#9ba6be; --line:#2a3553;
+  --red:#ee6d71; --blue:#8aaced; --gold:#e6c36a;
+  --shade:rgba(0,0,0,.42); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0f1626; --paper-2:#141d32; --surface:#1a2440;
+  --ink:#e7ebf3; --ink-soft:#9ba6be; --line:#2a3553;
+  --red:#ee6d71; --blue:#8aaced; --gold:#e6c36a;
+  --shade:rgba(0,0,0,.42); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.75;word-break:keep-all;overflow-wrap:break-word;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+canvas{display:block;width:100%;height:100%}
+h1,h2,h3{font-weight:400;margin:0;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:1080px;margin-inline:auto;padding-inline:var(--gutter)}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--paper);background:color-mix(in srgb,var(--paper) 86%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 26px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-family:var(--f-display);font-size:21px;white-space:nowrap}
+.brand svg{width:28px;height:28px;flex:none}
+.top nav{display:flex;gap:4px 20px;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+.top nav::-webkit-scrollbar{display:none}
+.top nav a{color:var(--ink-soft);text-decoration:none;font-size:14.5px;white-space:nowrap;padding-block:6px}
+.top nav a:hover{color:var(--ink)}
+.theme{margin-left:auto;width:38px;height:38px;flex:none;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;color:var(--ink-soft)}
+.theme:hover{color:var(--ink);border-color:var(--ink-soft)}
+.theme svg{width:18px;height:18px}
+@media (max-width:760px){.top nav{order:3;flex-basis:100%}}
+
+/* hero */
+.hero{position:relative;background:var(--night);color:var(--on-night)}
+.hero-art{position:relative;height:clamp(300px,54vw,620px)}
+.hero-art::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 48%,color-mix(in srgb,var(--night) 78%,transparent))}
+.hero-text{display:grid;gap:12px;justify-items:start;padding-block:18px 40px}
+.eyebrow{font-size:13.5px;letter-spacing:.06em;color:var(--on-night-soft)}
+.hero h1{font-family:var(--f-display);font-size:clamp(54px,10vw,124px);line-height:1;letter-spacing:.02em}
+.hero .lead{max-width:27em;font-size:clamp(15px,1.7vw,18px);color:var(--on-night-soft)}
+@media (min-width:760px){.hero-text{position:absolute;inset:auto 0 0 0;padding-block:0 clamp(32px,5vw,60px)}}
+
+.airmail{height:10px;background:repeating-linear-gradient(-45deg,var(--red) 0 15px,var(--paper) 15px 22px,var(--blue) 22px 37px,var(--paper) 37px 44px)}
+
+/* sections */
+section{padding-block:clamp(56px,8vw,104px)}
+section.alt{background:var(--paper-2)}
+.head{display:grid;gap:8px;max-width:40em;margin-bottom:clamp(26px,4vw,46px)}
+.head h2{font-family:var(--f-display);font-size:clamp(32px,4.6vw,48px);line-height:1.2}
+.head p{color:var(--ink-soft)}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(32px,6vw,84px);align-items:start}
+.about .copy{display:grid;gap:18px;min-width:0}
+.about .copy>p{font-size:17px;max-width:31em}
+.sign{display:grid;gap:2px;margin-top:8px;padding-left:16px;border-left:2px solid var(--red)}
+.sign span{font-size:13px;color:var(--ink-soft)}
+.sign q{font-family:var(--f-hand);font-size:29px;line-height:1.35;quotes:none}
+.desk{display:grid;gap:6px;min-width:0}
+.postmark{width:min(100%,250px);height:auto;color:var(--red);transform:rotate(-7deg);justify-self:end;margin-bottom:-6px}
+.desk h3{font-size:14px;font-weight:600;letter-spacing:.04em}
+.desk dl{margin:0;border-top:1px solid var(--ink)}
+.desk .row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:2px 16px;padding-block:12px;border-bottom:1px solid var(--line)}
+.desk dt{font-size:14px;color:var(--ink-soft)}
+.desk dd{margin:0;font-weight:500;font-variant-numeric:tabular-nums;text-align:right}
+.dday{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;background:var(--red);color:var(--surface);font-family:var(--f-mono);font-size:12px;font-weight:500;vertical-align:2px}
+@media (max-width:820px){.about{grid-template-columns:minmax(0,1fr)}.postmark{justify-self:start;width:min(100%,220px)}}
+
+/* staff */
+.staff{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,4vw,52px)}
+.member{--c:var(--red);--st:var(--st-red);display:grid;gap:20px;align-content:start;min-width:0}
+.member.moka{--c:var(--gold);--st:var(--st-gold)}
+.member.ian{--c:var(--blue);--st:var(--st-blue)}
+.stamp{--r:5px;width:100%;max-width:290px;padding:calc(2*var(--r) + 2px);
+  background:radial-gradient(var(--r),#0000 98%,var(--surface)) round calc(-1.5*var(--r)) calc(-1.5*var(--r))/calc(3*var(--r)) calc(3*var(--r)),
+             linear-gradient(var(--surface) 0 0) no-repeat 50%/calc(100% - 3*var(--r)) calc(100% - 3*var(--r));
+  filter:drop-shadow(0 8px 16px var(--shade));transform:rotate(var(--tilt,0deg));transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.member:hover .stamp{transform:rotate(0deg) translateY(-4px)}
+.stamp .art{position:relative;aspect-ratio:4/5;background:var(--st);color:var(--on-night);overflow:hidden}
+.stamp .art svg{position:absolute;inset:0;width:100%;height:100%}
+.stamp .val{position:absolute;top:8px;right:10px;font-family:var(--f-mono);font-size:13px;font-weight:500}
+.stamp .cty{position:absolute;left:10px;bottom:7px;font-size:11.5px;letter-spacing:.14em;opacity:.85}
+.member .info{display:grid;gap:8px;min-width:0}
+.member h3{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font-family:var(--f-display);font-size:clamp(32px,3.4vw,40px);line-height:1.1}
+.member h3 small{font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;color:var(--ink-soft)}
+.member .role{font-size:14px;font-weight:600;color:var(--c)}
+.member p{font-size:15.5px;color:var(--ink-soft)}
+.member .kw{font-size:13.5px;color:var(--ink-soft);border-top:1px solid var(--line);padding-top:10px}
+@media (max-width:860px){.staff{grid-template-columns:minmax(0,1fr)}.member{grid-template-columns:minmax(0,190px) minmax(0,1fr);gap:16px 28px;align-items:start}}
+@media (max-width:520px){.member{grid-template-columns:minmax(0,1fr)}.stamp{max-width:230px}}
+
+/* music */
+.tracks{display:grid;border-top:1px solid var(--ink)}
+.track{display:grid;grid-template-columns:minmax(0,180px) minmax(0,1fr);gap:16px clamp(20px,4vw,48px);align-items:center;padding-block:clamp(20px,3vw,30px);border-bottom:1px solid var(--line)}
+.jacket{aspect-ratio:1;max-width:100%;border-radius:3px;overflow:hidden;background:var(--night);box-shadow:0 12px 28px var(--shade)}
+.track .info{display:grid;gap:8px;min-width:0}
+.track h3{font-family:var(--f-display);font-size:clamp(27px,3.2vw,36px);line-height:1.2}
+.meta{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.04em;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.track p{font-size:15px;color:var(--ink-soft);max-width:34em}
+.player{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:6px}
+.play{display:inline-flex;align-items:center;gap:10px;padding:8px 18px 8px 14px;border:1px solid var(--ink);border-radius:999px;font-size:14px;font-weight:500;white-space:nowrap}
+.play:hover{background:var(--ink);color:var(--paper)}
+.play .ic{width:0;height:0;border-style:solid;border-width:5px 0 5px 8px;border-color:transparent transparent transparent currentColor}
+.play[aria-pressed="true"] .ic{width:9px;height:10px;border:0;border-left:3px solid currentColor;border-right:3px solid currentColor}
+.bar{flex:1 1 140px;min-width:100px;height:3px;border-radius:2px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--red)}
+.time{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-soft);font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (max-width:560px){.track{grid-template-columns:minmax(0,92px) minmax(0,1fr);align-items:start}}
+
+/* video */
+.video{display:grid;grid-template-columns:minmax(0,2.3fr) minmax(0,1fr);gap:clamp(20px,3vw,34px);align-items:start}
+.teaser{display:grid;gap:12px;min-width:0}
+.screen{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:4px;overflow:hidden;background:var(--night)}
+.screen .big{position:absolute;inset:0;display:grid;place-items:center;transition:opacity .3s}
+.screen .big span{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--on-night);background:color-mix(in srgb,var(--night) 55%,transparent)}
+.screen .big span::before{content:"";margin-left:6px;border-style:solid;border-width:12px 0 12px 19px;border-color:transparent transparent transparent var(--on-night)}
+.screen.playing .big{opacity:0}
+.teaser .cap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px}
+.teaser .cap b{font-weight:500}
+.vlist{list-style:none;margin:0;padding:0;display:grid;gap:22px}
+.vcard{display:grid;gap:8px;min-width:0}
+.vthumb{position:relative;aspect-ratio:16/9;max-width:100%;border-radius:4px;overflow:hidden;background:var(--night)}
+.chip{position:absolute;left:8px;top:8px;padding:1px 9px;border-radius:999px;font-size:12px;color:var(--on-night);background:color-mix(in srgb,var(--night) 72%,transparent)}
+.vcard b{font-weight:500;font-size:15px}
+.vcard span{font-size:13px;color:var(--ink-soft)}
+@media (max-width:820px){.video{grid-template-columns:minmax(0,1fr)}.vlist{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:460px){.vlist{grid-template-columns:minmax(0,1fr)}}
+
+/* postcards */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3.4vw,40px) clamp(16px,2.6vw,30px)}
+.pc{display:grid;gap:10px;align-content:start;text-align:left;min-width:0}
+.pc .frame{padding:8px;background:var(--surface);box-shadow:0 10px 22px var(--shade);transform:rotate(var(--tilt,0deg));transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.pc:hover .frame{transform:rotate(0deg) scale(1.02)}
+.pc .frame div{aspect-ratio:3/2;background:var(--night)}
+.pc b{font-weight:500;font-size:15px}
+.pc .note{font-family:var(--f-hand);font-size:22px;line-height:1.3;color:var(--ink-soft)}
+@media (max-width:760px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+dialog.lb{width:min(96vw,1100px,calc((88vh - 150px) * 1.5));max-width:none;padding:0;border:0;background:transparent;color:var(--on-night)}
+dialog.lb::backdrop{background:rgba(8,12,22,.88)}
+.lb .frame{padding:10px;background:var(--surface)}
+.lb .frame div{aspect-ratio:3/2;background:var(--night)}
+.lb .cap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;padding-top:14px}
+.lb .cap b{font-family:var(--f-display);font-weight:400;font-size:26px}
+.lb .cap span{font-family:var(--f-hand);font-size:25px;color:var(--on-night-soft)}
+.lb .cap small{font-family:var(--f-mono);font-size:12.5px;color:var(--on-night-soft)}
+.lb .x{display:block;margin:16px auto 0;padding:8px 20px;border:1px solid var(--on-night);border-radius:999px;color:var(--on-night);font-size:13.5px}
+
+/* board */
+.board{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:clamp(30px,5vw,64px);align-items:start}
+.posts{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.posts li{display:grid;grid-template-columns:minmax(0,104px) minmax(0,1fr);gap:4px 20px;padding-block:18px;border-bottom:1px solid var(--line)}
+.posts time{font-family:var(--f-mono);font-size:13px;color:var(--ink-soft);font-variant-numeric:tabular-nums;padding-top:3px}
+.posts b{font-weight:500;font-size:17px}
+.posts p{margin-top:4px;font-size:15px;color:var(--ink-soft)}
+.social{display:grid;gap:10px;min-width:0}
+.social h3{font-size:14px;font-weight:600;letter-spacing:.04em}
+.social dl{margin:0;border-top:1px solid var(--ink)}
+.social .row{display:grid;gap:0;padding-block:12px;border-bottom:1px solid var(--line)}
+.social dt{font-size:13px;color:var(--ink-soft)}
+.social dd{margin:0;font-weight:500;overflow-wrap:anywhere}
+@media (max-width:760px){.board{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:480px){.posts li{grid-template-columns:minmax(0,1fr)}}
+
+/* credits */
+.env{padding:10px;background:repeating-linear-gradient(-45deg,var(--red) 0 16px,var(--surface) 16px 24px,var(--blue) 24px 40px,var(--surface) 40px 48px);box-shadow:0 18px 40px var(--shade)}
+.env .in{display:grid;gap:30px;padding:clamp(22px,4vw,46px);background:var(--surface)}
+.reg{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
+.reg span{padding:2px 10px;border:1.5px solid var(--red);color:var(--red);font-size:13px;font-weight:600;letter-spacing:.1em}
+.reg code{font-family:var(--f-mono);font-size:14px;letter-spacing:.08em;color:var(--ink-soft)}
+.addr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 40px}
+.addr div{display:grid;gap:2px;min-width:0}
+.addr span{font-size:13px;color:var(--ink-soft)}
+.addr b{font-family:var(--f-hand);font-weight:400;font-size:31px;line-height:1.3}
+.roles{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px}
+.roles div{display:flex;justify-content:space-between;gap:12px;padding-block:12px;border-bottom:1px dashed var(--line)}
+.roles dt{font-size:14px;color:var(--ink-soft)}
+.roles dd{margin:0;font-weight:500;text-align:right}
+.mail{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.mail>span{font-size:14px;color:var(--ink-soft)}
+.mail code{font-family:var(--f-mono);font-size:15px;user-select:all;overflow-wrap:anywhere}
+.copybtn{padding:6px 14px;border:1px solid var(--ink);border-radius:999px;font-size:13px}
+.copybtn:hover{background:var(--ink);color:var(--paper)}
+.mail output{font-size:13px;color:var(--ink-soft)}
+@media (max-width:640px){.addr,.roles{grid-template-columns:minmax(0,1fr)}}
+
+footer{padding-block:28px 44px;font-size:14px;color:var(--ink-soft)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 24px}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.stamp,.pc .frame,.screen .big{transition:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="달빛 우체국 맨 위로">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="10" width="24" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12l12 8.5L27 12" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="26" cy="7" r="4.2" fill="var(--gold)"/></svg>
+      달빛 우체국
+    </a>
+    <nav aria-label="섹션">
+      <a href="#about">소개</a><a href="#staff">직원</a><a href="#music">음악</a><a href="#video">영상</a><a href="#postcards">엽서</a><a href="#board">게시판</a><a href="#credits">만든 사람들</a>
+    </nav>
+    <button class="theme" id="theme" type="button" aria-label="어두운 화면으로"></button>
+  </div>
+</header>
+
+<main id="top">
+<div class="hero">
+  <div class="hero-art"><canvas id="hero-c" role="img" aria-label="보름달 아래 언덕 위 작은 우체국에서 편지들이 달을 향해 날아가는 그림"></canvas></div>
+  <div class="hero-text wrap">
+    <p class="eyebrow">단편 애니메이션 · 12분 · 2027년 봄 공개 예정</p>
+    <h1>달빛 우체국</h1>
+    <p class="lead">보름달이 뜨는 밤에만 문을 여는 우체국. 부치지 못한 편지를 달까지 배달합니다.</p>
+  </div>
+</div>
+<div class="airmail" aria-hidden="true"></div>
+
+<section id="about">
+  <div class="wrap about">
+    <div class="copy">
+      <div class="head" style="margin-bottom:0">
+        <h2>보름밤에만 여는 우체국</h2>
+      </div>
+      <p>달빛 우체국은 보름달이 뜨는 밤, 자정부터 새벽 네 시까지만 문을 엽니다. 언덕 위 빨간 우체통에 부치지 못한 편지를 넣으면 견습 집배원 하루가 자전거를 타고 달까지 배달해요.</p>
+      <p>답장은 오지 않습니다. 대신 편지가 많이 도착한 다음 보름에는 달이 조금 더 밝게 뜬다는 이야기가 전해집니다.</p>
+      <div class="sign">
+        <span>우체통 옆 안내문</span>
+        <q>보내는 사람 칸은 비워 두셔도 괜찮아요.</q>
+      </div>
+    </div>
+    <aside class="desk" aria-labelledby="desk-h">
+      <svg class="postmark" viewBox="0 0 330 200" aria-hidden="true">
+        <defs><path id="pm-arc" d="M230,100 m-68,0 a68,68 0 1,1 136,0 a68,68 0 1,1 -136,0"/></defs>
+        <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+          <path d="M6 66 q11-9 22 0 t22 0 t22 0 t22 0 t22 0"/>
+          <path d="M6 88 q11-9 22 0 t22 0 t22 0 t22 0 t22 0"/>
+          <path d="M6 110 q11-9 22 0 t22 0 t22 0 t22 0 t22 0"/>
+          <path d="M6 132 q11-9 22 0 t22 0 t22 0 t22 0 t22 0"/>
+        </g>
+        <circle cx="230" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="4"/>
+        <circle cx="230" cy="100" r="52" fill="none" stroke="currentColor" stroke-width="2"/>
+        <text fill="currentColor" font-size="15" letter-spacing="2" font-family="IBM Plex Sans KR, sans-serif"><textPath href="#pm-arc">달빛 우체국 · MOONLIGHT POST · 보름밤 개국 ·</textPath></text>
+        <text id="pm-date" x="230" y="98" text-anchor="middle" fill="currentColor" font-size="19" font-family="IBM Plex Mono, monospace">2026.10.26</text>
+        <text x="230" y="122" text-anchor="middle" fill="currentColor" font-size="15" font-family="IBM Plex Mono, monospace">00:00</text>
+      </svg>
+      <h3 id="desk-h">우체국 안내</h3>
+      <dl>
+        <div class="row"><dt>다음 개국</dt><dd><span id="next-open">10월 26일 (월)</span><span class="dday" id="dday">D-14</span></dd></div>
+        <div class="row"><dt>영업 시간</dt><dd>보름밤 00:00 – 04:00</dd></div>
+        <div class="row"><dt>접수 창구</dt><dd>언덕 위 빨간 우체통</dd></div>
+        <div class="row"><dt>배달 거리</dt><dd>지구 → 달 384,400km</dd></div>
+        <div class="row"><dt>우편 요금</dt><dd>별 한 알</dd></div>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<section id="staff" class="alt">
+  <div class="wrap">
+    <div class="head">
+      <h2>우체국 직원</h2>
+      <p>직원은 셋입니다. 그중 하나는 고양이예요.</p>
+    </div>
+    <div class="staff">
+      <article class="member haru">
+        <div class="stamp" style="--tilt:-2deg">
+          <div class="art">
+            <svg viewBox="0 0 100 125" aria-hidden="true">
+              <circle cx="80" cy="22" r="9" fill="currentColor"/>
+              <g fill="currentColor" opacity=".75"><circle cx="16" cy="16" r="1.3"/><circle cx="34" cy="30" r="1"/><circle cx="58" cy="12" r="1.4"/><circle cx="12" cy="42" r="1"/><circle cx="62" cy="34" r=".9"/></g>
+              <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="27" cy="88" r="15"/><circle cx="74" cy="88" r="15"/>
+                <path d="M27 88H50L42 64ZM42 64H66L50 88M66 64L74 88M42 64L41 58M35 58H47M66 64L63 53M59 53H69"/>
+              </g>
+              <rect x="13" y="55" width="21" height="14" rx="2" fill="currentColor"/>
+              <path d="M13 55l10.5 7.5L34 55" fill="none" stroke="var(--st-red)" stroke-width="1.6"/>
+              <path d="M6 104H94" stroke="currentColor" stroke-width="1.5" opacity=".5"/>
+            </svg>
+            <span class="val">별 1</span><span class="cty">달빛우편</span>
+          </div>
+        </div>
+        <div class="info">
+          <h3>하루 <small>HARU</small></h3>
+          <p class="role">견습 집배원</p>
+          <p>길눈이 어두워서 매번 다른 계단으로 달에 올라갑니다. 덕분에 달에는 하루만 아는 길이 서른 개쯤 생겼어요.</p>
+          <p class="kw">자전거 · 우편 가방 · 길치</p>
+        </div>
+      </article>
+      <article class="member moka">
+        <div class="stamp" style="--tilt:1.5deg">
+          <div class="art">
+            <svg viewBox="0 0 100 125" aria-hidden="true">
+              <g fill="none" stroke="currentColor" stroke-width="2" opacity=".55"><path d="M-4 18q8-6 16 0t16 0t16 0t16 0t16 0t16 0t16 0"/><path d="M-4 28q8-6 16 0t16 0t16 0t16 0t16 0t16 0t16 0"/></g>
+              <path d="M70 108C88 104 92 88 82 80" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+              <path d="M28 112C24 86 32 70 50 70S76 86 72 112Z" fill="currentColor"/>
+              <ellipse cx="50" cy="58" rx="19" ry="16" fill="currentColor"/>
+              <path d="M33 50L35 33L46 44ZM67 50L65 33L54 44Z" fill="currentColor"/>
+              <path d="M40 58q4 3.5 8 0M52 58q4 3.5 8 0" fill="none" stroke="var(--st-gold)" stroke-width="2" stroke-linecap="round"/>
+              <path d="M48 64h4l-2 2.5Z" fill="var(--st-gold)"/>
+              <text x="72" y="46" fill="currentColor" font-size="12" font-family="IBM Plex Mono, monospace">z</text>
+              <text x="80" y="37" fill="currentColor" font-size="9" font-family="IBM Plex Mono, monospace">z</text>
+              <path d="M6 114H94" stroke="currentColor" stroke-width="1.5" opacity=".5"/>
+            </svg>
+            <span class="val">별 5</span><span class="cty">달빛우편</span>
+          </div>
+        </div>
+        <div class="info">
+          <h3>모카 <small>MOKA</small></h3>
+          <p class="role">국장</p>
+          <p>우체국에서 가장 오래 일한 고양이. 하루 종일 자다가 편지에 소인 찍을 때만 일어납니다. 소인이 비뚤면 다시 찍게 해요.</p>
+          <p class="kw">낮잠 · 소인 · 고집</p>
+        </div>
+      </article>
+      <article class="member ian">
+        <div class="stamp" style="--tilt:-1deg">
+          <div class="art">
+            <svg viewBox="0 0 100 125" aria-hidden="true">
+              <g fill="currentColor" opacity=".75"><circle cx="18" cy="20" r="1.3"/><circle cx="36" cy="40" r="1"/><circle cx="88" cy="48" r="1.2"/><circle cx="14" cy="64" r="1"/><circle cx="90" cy="76" r=".9"/></g>
+              <circle cx="72" cy="22" r="18" fill="currentColor" opacity=".16"/>
+              <polygon points="72,9 75.2,17.6 84.4,18 77.2,23.7 79.6,32.5 72,27.5 64.4,32.5 66.8,23.7 59.6,18 68.8,17.6" fill="currentColor"/>
+              <g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                <path d="M30 120L58 34M46 120L74 34"/>
+                <path d="M33.3 110H49.3M36.5 100H52.5M39.8 90H55.8M43 80H59M46.3 70H62.3M49.5 60H65.5M52.8 50H68.8M56 40H72" stroke-width="2.2"/>
+              </g>
+            </svg>
+            <span class="val">별 3</span><span class="cty">달빛우편</span>
+          </div>
+        </div>
+        <div class="info">
+          <h3>이안 <small>IAN</small></h3>
+          <p class="role">별 줍는 소년</p>
+          <p>우편 요금으로 받은 별을 모아 사다리를 타고 하늘에 다시 겁니다. 별이 모자란 밤에는 주머니에 아껴 둔 별을 꺼내요.</p>
+          <p class="kw">사다리 · 별 주머니 · 비밀</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="music">
+  <div class="wrap">
+    <div class="head">
+      <h2>사운드트랙</h2>
+      <p>오르골로 연주한 세 곡. 재생을 누르면 바로 들려요.</p>
+    </div>
+    <div class="tracks">
+      <article class="track">
+        <div class="jacket"><canvas data-scene="j1" aria-hidden="true"></canvas></div>
+        <div class="info">
+          <h3>자정의 창구</h3>
+          <p class="meta">트랙 01 · 3/4박 왈츠 · 92 BPM</p>
+          <p>창구에 불이 켜지고 첫 편지가 들어오는 순간. 모카 국장이 하품하는 박자에 맞춘 왈츠입니다.</p>
+          <div class="player">
+            <button class="play" type="button" aria-pressed="false"><span class="ic" aria-hidden="true"></span><span class="lbl">재생</span></button>
+            <div class="bar" aria-hidden="true"><i></i></div>
+            <span class="time">0:00 / 0:33</span>
+          </div>
+        </div>
+      </article>
+      <article class="track">
+        <div class="jacket"><canvas data-scene="j2" aria-hidden="true"></canvas></div>
+        <div class="info">
+          <h3>384,400km</h3>
+          <p class="meta">트랙 02 · 4/4박 · 80 BPM</p>
+          <p>하루가 달 계단을 오르는 동안 흐르는 곡. 다섯 음만으로 끝까지 올라갑니다.</p>
+          <div class="player">
+            <button class="play" type="button" aria-pressed="false"><span class="ic" aria-hidden="true"></span><span class="lbl">재생</span></button>
+            <div class="bar" aria-hidden="true"><i></i></div>
+            <span class="time">0:00 / 0:38</span>
+          </div>
+        </div>
+      </article>
+      <article class="track">
+        <div class="jacket"><canvas data-scene="j3" aria-hidden="true"></canvas></div>
+        <div class="info">
+          <h3>소인 찍는 밤</h3>
+          <p class="meta">트랙 03 · 4/4박 · 108 BPM</p>
+          <p>마디 끝마다 쿵, 소인 찍는 소리가 들어 있어요. 모카 국장의 작업곡입니다.</p>
+          <div class="player">
+            <button class="play" type="button" aria-pressed="false"><span class="ic" aria-hidden="true"></span><span class="lbl">재생</span></button>
+            <div class="bar" aria-hidden="true"><i></i></div>
+            <span class="time">0:00 / 0:37</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="video">
+  <div class="wrap">
+    <div class="head">
+      <h2>영상</h2>
+      <p>티저를 먼저 공개합니다. 본편 예고편은 보름마다 하나씩 올라와요.</p>
+    </div>
+    <div class="video">
+      <div class="teaser">
+        <div class="screen" id="screen">
+          <canvas id="teaser-c" role="img" aria-label="티저 영상: 우체통에서 출발한 편지 한 통이 달까지 날아가는 장면"></canvas>
+          <button class="big" id="t-big" type="button" aria-label="티저 재생"><span aria-hidden="true"></span></button>
+        </div>
+        <div class="player">
+          <button class="play" id="t-play" type="button" aria-pressed="false"><span class="ic" aria-hidden="true"></span><span class="lbl">티저 재생</span></button>
+          <div class="bar" id="t-bar" aria-hidden="true"><i></i></div>
+          <span class="time" id="t-time">0:00 / 0:24</span>
+        </div>
+        <div class="cap"><b>티저 · 편지 한 통</b><span class="meta">소리 있음</span></div>
+      </div>
+      <ul class="vlist">
+        <li class="vcard">
+          <div class="vthumb"><canvas data-scene="v1" aria-hidden="true"></canvas><span class="chip">곧 공개</span></div>
+          <b>1화 예고편: 서른 번째 계단</b>
+          <span>11월 24일 보름 공개 예정</span>
+        </li>
+        <li class="vcard">
+          <div class="vthumb"><canvas data-scene="v2" aria-hidden="true"></canvas><span class="chip">곧 공개</span></div>
+          <b>메이킹: 오르골 녹음</b>
+          <span>12월 24일 보름 공개 예정</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="postcards" class="alt">
+  <div class="wrap">
+    <div class="head">
+      <h2>엽서</h2>
+      <p>보름밤마다 한 장씩 그린 엽서입니다. 누르면 크게 볼 수 있어요.</p>
+    </div>
+    <div class="cards">
+      <button class="pc" type="button" data-key="p1"><div class="frame" style="--tilt:-1.2deg"><div><canvas data-scene="p1" aria-hidden="true"></canvas></div></div><b>언덕 위 우체국</b><span class="note">보름밤 자정, 창구에 불이 켜졌다.</span></button>
+      <button class="pc" type="button" data-key="p2"><div class="frame" style="--tilt:.8deg"><div><canvas data-scene="p2" aria-hidden="true"></canvas></div></div><b>자정의 창구</b><span class="note">모카 국장이 소인을 하나 찍고 다시 잠들었다.</span></button>
+      <button class="pc" type="button" data-key="p3"><div class="frame" style="--tilt:-.6deg"><div><canvas data-scene="p3" aria-hidden="true"></canvas></div></div><b>384,400km</b><span class="note">여기서 달까지. 하루의 자전거로 네 시간.</span></button>
+      <button class="pc" type="button" data-key="p4"><div class="frame" style="--tilt:1.1deg"><div><canvas data-scene="p4" aria-hidden="true"></canvas></div></div><b>서른 번째 계단</b><span class="note">하루가 또 새 길을 찾았다.</span></button>
+      <button class="pc" type="button" data-key="p5"><div class="frame" style="--tilt:-.9deg"><div><canvas data-scene="p5" aria-hidden="true"></canvas></div></div><b>초승달 휴무일</b><span class="note">오늘은 문을 열지 않습니다.</span></button>
+      <button class="pc" type="button" data-key="p6"><div class="frame" style="--tilt:.6deg"><div><canvas data-scene="p6" aria-hidden="true"></canvas></div></div><b>새벽 네 시</b><span class="note">마지막 편지가 달에 닿았다. 창구를 닫는다.</span></button>
+    </div>
+  </div>
+</section>
+
+<dialog class="lb" id="lb" aria-labelledby="lb-t">
+  <div class="frame"><div><canvas id="lb-c" aria-hidden="true"></canvas></div></div>
+  <div class="cap"><b id="lb-t"></b><span id="lb-n"></span><small id="lb-d"></small></div>
+  <button class="x" id="lb-x" type="button">닫기</button>
+</dialog>
+
+<section id="board">
+  <div class="wrap">
+    <div class="head">
+      <h2>게시판</h2>
+      <p>영업 소식과 공지를 올립니다.</p>
+    </div>
+    <div class="board">
+      <ul class="posts">
+        <li><time datetime="2026-10-12">2026.10.12</time><div><b>10월 보름 영업 안내</b><p>26일 자정에 창구를 엽니다. 우체통이 넘치면 모카 국장이 화를 내니 편지는 한 통씩 넣어 주세요.</p></div></li>
+        <li><time datetime="2026-10-05">2026.10.05</time><div><b>사운드트랙 세 곡 공개</b><p>오르골 사운드트랙을 먼저 들려드립니다. 음악 칸에서 바로 재생할 수 있어요.</p></div></li>
+        <li><time datetime="2026-09-27">2026.09.27</time><div><b>9월 보름 배달 완료</b><p>편지 1,284통을 달에 전달했습니다. 하루는 이번에도 새 계단을 찾았습니다.</p></div></li>
+      </ul>
+      <div class="social">
+        <h3>소식 받기</h3>
+        <dl>
+          <div class="row"><dt>인스타그램</dt><dd>@moonlight.post</dd></div>
+          <div class="row"><dt>유튜브</dt><dd>@moonlightpost</dd></div>
+          <div class="row"><dt>뉴스레터</dt><dd>보름 편지, 매달 보름 발송</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="credits" class="alt">
+  <div class="wrap">
+    <div class="head">
+      <h2>만든 사람들</h2>
+      <p>편지는 아래 주소로 보내 주세요.</p>
+    </div>
+    <div class="env">
+      <div class="in">
+        <div class="reg"><span>등기</span><code>RR 2610 2600 01 KR</code></div>
+        <div class="addr">
+          <div><span>보내는 사람</span><b>작은달 스튜디오</b></div>
+          <div><span>받는 사람</span><b>보름밤을 기다리는 모든 분께</b></div>
+        </div>
+        <dl class="roles">
+          <div><dt>원작 · 이야기</dt><dd>윤달</dd></div>
+          <div><dt>그림 · 캐릭터</dt><dd>한보름</dd></div>
+          <div><dt>음악</dt><dd>오르골 팀</dd></div>
+          <div><dt>웹사이트</dt><dd>작은달 스튜디오</dd></div>
+        </dl>
+        <div class="mail">
+          <span>문의</span>
+          <code id="mail">hello@moonlight-post.example</code>
+          <button class="copybtn" id="copy" type="button">주소 복사</button>
+          <output id="copy-msg" aria-live="polite"></output>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="airmail" aria-hidden="true"></div>
+<footer>
+  <div class="wrap">
+    <span>© 2026 작은달 스튜디오</span>
+    <span>샘플 페이지예요. 이야기, 인물, 음악은 모두 가상이며 음악은 브라우저가 오르골 소리로 직접 연주합니다.</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const DISPLAY = '"Diphylleia","Song Myung","Nanum Myeongjo",serif';
+const BODY = '"IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif';
+
+/* ---------- theme ---------- */
+const root = document.documentElement, themeBtn = $('#theme');
+const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+const SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M5.3 5.3l1.7 1.7M17 17l1.7 1.7M5.3 18.7 7 17M17 7l1.7-1.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
+try { const s = localStorage.getItem('moonpost-theme'); if (s === 'dark' || s === 'light') root.dataset.theme = s; } catch (e) {}
+const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+function syncTheme() { const d = isDark(); themeBtn.innerHTML = d ? SUN : MOON; themeBtn.setAttribute('aria-label', d ? '밝은 화면으로' : '어두운 화면으로'); }
+themeBtn.addEventListener('click', () => {
+  const next = isDark() ? 'light' : 'dark'; root.dataset.theme = next;
+  try { localStorage.setItem('moonpost-theme', next); } catch (e) {}
+  syncTheme();
+});
+syncTheme();
+
+/* ---------- next full moon (Meeus, ch. 49) ---------- */
+function fullMoonJDE(k) {
+  const T = k / 1236.85, d = Math.PI / 180, E = 1 - 0.002516 * T;
+  const M = (2.5534 + 29.1053567 * k) * d;
+  const Mp = (201.5643 + 385.81693528 * k + 0.0107582 * T * T) * d;
+  const F = (160.7108 + 390.67050284 * k - 0.0016118 * T * T) * d;
+  return 2451550.09766 + 29.530588861 * k + 0.00015437 * T * T
+    - 0.40614 * Math.sin(Mp) + 0.17302 * E * Math.sin(M) + 0.01614 * Math.sin(2 * Mp)
+    + 0.01043 * Math.sin(2 * F) + 0.00734 * E * Math.sin(Mp - M) - 0.00515 * E * Math.sin(Mp + M)
+    + 0.00209 * E * E * Math.sin(2 * M);
+}
+function nextFullMoon(ms) {
+  const jd = ms / 864e5 + 2440587.5;
+  let k = Math.floor((jd - 2451550.09766) / 29.530588861) - 1 + 0.5;
+  for (let i = 0; i < 4; i++, k++) { const J = fullMoonJDE(k); if (J > jd - 0.6) return new Date((J - 2440587.5) * 864e5); }
+  return null;
+}
+try {
+  const now = new Date(), fm = nextFullMoon(now.getTime());
+  if (fm) {
+    const day = d => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+    const dd = Math.round((day(fm) - day(now)) / 864e5);
+    $('#next-open').textContent = new Intl.DateTimeFormat('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' }).format(fm).replace(/\s*\((.)\)/, ' ($1)');
+    $('#dday').textContent = dd <= 0 ? '오늘 밤' : 'D-' + dd;
+    $('#pm-date').textContent = `${fm.getFullYear()}.${String(fm.getMonth() + 1).padStart(2, '0')}.${String(fm.getDate()).padStart(2, '0')}`;
+  }
+} catch (e) {}
+
+/* ---------- scene painter ---------- */
+function rng(seed) { let s = seed >>> 0; return () => { s = (s + 0x6D2B79F5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+const lerp = (a, b, t) => a + (b - a) * t;
+const clamp01 = x => x < 0 ? 0 : x > 1 ? 1 : x;
+const ease = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+const qb = (p, a, b, c) => { const u = 1 - p; return [u * u * a[0] + 2 * u * p * b[0] + p * p * c[0], u * u * a[1] + 2 * u * p * b[1] + p * p * c[1]]; };
+const qt = (p, a, b, c) => [2 * (1 - p) * (b[0] - a[0]) + 2 * p * (c[0] - b[0]), 2 * (1 - p) * (b[1] - a[1]) + 2 * p * (c[1] - b[1])];
+
+const HILLS = [{ y: .66, a: .07, f: 1.2, p: .8, c: '#1b2850' }, { y: .78, a: .055, f: 2, p: 2.4, c: '#141e3c' }, { y: .88, a: .04, f: 1.5, p: 4.1, c: '#0d1424' }];
+const CLOSE = [{ y: .6, a: .06, f: 1.1, p: .4, c: '#1b2850' }, { y: .76, a: .05, f: 1.7, p: 2, c: '#141e3c' }, { y: .9, a: .025, f: 1, p: 1.2, c: '#0d1424' }];
+const DAWN = [{ y: .68, a: .06, f: 1.2, p: .8, c: '#4a4775' }, { y: .79, a: .05, f: 2, p: 2.4, c: '#2f3158' }, { y: .89, a: .04, f: 1.5, p: 4.1, c: '#1a1f3c' }];
+const PLUM = [{ y: .66, a: .06, f: 1.2, p: .8, c: '#3a2648' }, { y: .78, a: .05, f: 2, p: 2.4, c: '#2a1b3a' }, { y: .88, a: .04, f: 1.5, p: 4.1, c: '#170f24' }];
+
+const SC = {
+  hero: { seed: 11, moon: { x: .8, y: .27, r: .085 }, house: { x: .7, s: 1, lit: true }, env: 6, envSpeed: .012, trail: true },
+  p1: { seed: 3, moon: { x: .74, y: .28, r: .1 }, house: { x: .36, s: 1, lit: true }, env: 4, trail: true },
+  p2: { seed: 5, moon: { x: .2, y: .24, r: .06 }, house: { x: .6, s: 2.1, lit: true }, hills: CLOSE, stars: 1.2 },
+  p3: { seed: 9, moon: { x: .64, y: .42, r: .3 }, house: { x: .14, s: .7, lit: true }, env: 9, trail: true, stars: .8 },
+  p4: { seed: 13, moon: { x: .82, y: .2, r: .08 }, house: { x: .24, s: 1, lit: true }, stairs: true, env: 1 },
+  p5: { seed: 17, sky: ['#070b17', '#111a36', '#1e2a50'], moon: { x: .72, y: .26, r: .075, phase: .72 }, moonGlow: .35, house: { x: .45, s: 1.1, lit: false }, stars: 1.6 },
+  p6: { seed: 21, sky: ['#1c2a57', '#6c5d8f', '#e8a98a'], glow: { x: .82, y: 1.05, c: 'rgba(255,196,150,.45)' }, moon: { x: .2, y: .5, r: .07, pale: true }, moonGlow: .4, house: { x: .66, s: 1, lit: 'one' }, stars: .3, hills: DAWN },
+  j1: { seed: 31, moon: { x: .28, y: .24, r: .12 }, house: { x: .6, s: 1.9, lit: true }, hills: CLOSE },
+  j2: { seed: 33, moon: { x: .6, y: .38, r: .26 }, house: { x: .2, s: .8, lit: true }, env: 6, trail: true },
+  j3: { seed: 35, sky: ['#22183a', '#43294f', '#6b3f56'], moon: { x: .5, y: .28, r: .14 }, house: { x: .5, s: 1.4, lit: true }, env: 2, hills: PLUM },
+  v1: { seed: 43, moon: { x: .8, y: .22, r: .09 }, house: { x: .22, s: 1, lit: true }, stairs: true },
+  v2: { seed: 45, sky: ['#22183a', '#43294f', '#6b3f56'], moon: { x: .3, y: .3, r: .1 }, house: { x: .66, s: 1.3, lit: true }, hills: PLUM, env: 3, trail: true },
+  teaser: { seed: 41, moon: { x: .58, y: .3, r: .11 }, house: { x: .8, s: 1.1, lit: true } }
+};
+
+function hillY(hl, x, w, h) { const u = x / w; return h * hl.y - h * hl.a * (Math.sin(u * hl.f * 6.283 + hl.p) * .65 + Math.sin(u * hl.f * 14.1 + hl.p * 1.7) * .35); }
+function drawHill(ctx, hl, w, h) { ctx.fillStyle = hl.c; ctx.beginPath(); ctx.moveTo(0, h); for (let x = 0; x <= w + 4; x += 4) ctx.lineTo(x, hillY(hl, x, w, h)); ctx.lineTo(w, h); ctx.closePath(); ctx.fill(); }
+function pines(ctx, hl, col, w, h, R, count, k, avoid) {
+  ctx.fillStyle = col;
+  for (let i = 0; i < count; i++) {
+    const x = R() * w, sz = R();
+    if (avoid && Math.abs(x - avoid.x) < avoid.r) continue;
+    const y = hillY(hl, x, w, h) + 2, th = (9 + sz * 13) * k, tw = th * .4;
+    ctx.beginPath(); ctx.moveTo(x, y - th); ctx.lineTo(x + tw, y); ctx.lineTo(x - tw, y); ctx.closePath(); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(x, y - th * 1.3); ctx.lineTo(x + tw * .7, y - th * .5); ctx.lineTo(x - tw * .7, y - th * .5); ctx.closePath(); ctx.fill();
+  }
+}
+function house(ctx, cx, gy, k, lit) {
+  const bw = 64 * k, bh = 40 * k, x0 = cx - bw / 2, y0 = gy - bh + 5 * k, ry = y0 - 22 * k;
+  if (lit) {
+    const wg = ctx.createRadialGradient(cx, y0 + bh * .4, 0, cx, y0 + bh * .4, 70 * k);
+    wg.addColorStop(0, lit === 'one' ? 'rgba(255,206,120,.14)' : 'rgba(255,206,120,.28)'); wg.addColorStop(1, 'rgba(255,206,120,0)');
+    ctx.fillStyle = wg; ctx.fillRect(cx - 70 * k, y0 + bh * .4 - 70 * k, 140 * k, 140 * k);
+  }
+  ctx.fillStyle = '#1a2342'; ctx.fillRect(cx + bw * .16, ry + 4 * k, 7 * k, 18 * k);
+  ctx.fillStyle = '#2b3a69'; ctx.fillRect(x0, y0, bw, bh);
+  ctx.fillStyle = '#6a2633'; ctx.beginPath(); ctx.moveTo(x0 - 6 * k, y0 + k); ctx.lineTo(cx, ry); ctx.lineTo(x0 + bw + 6 * k, y0 + k); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = '#c9c3b3'; ctx.lineWidth = Math.max(1, 1.2 * k); ctx.beginPath(); ctx.moveTo(cx, ry); ctx.lineTo(cx, ry - 14 * k); ctx.stroke();
+  ctx.fillStyle = '#c4383e'; ctx.fillRect(cx, ry - 14 * k, 9 * k, 6 * k);
+  const win = (wx, on) => {
+    ctx.fillStyle = on ? '#ffd27a' : '#141b33'; ctx.fillRect(wx, y0 + 11 * k, 10 * k, 12 * k);
+    ctx.fillStyle = '#2b3a69'; ctx.fillRect(wx + 4.4 * k, y0 + 11 * k, 1.2 * k, 12 * k); ctx.fillRect(wx, y0 + 16.4 * k, 10 * k, 1.2 * k);
+  };
+  win(x0 + 8 * k, !!lit); win(x0 + bw - 18 * k, lit === true);
+  ctx.fillStyle = '#3a2a30'; ctx.fillRect(cx - 6 * k, y0 + bh - 21 * k, 12 * k, 21 * k);
+  ctx.fillStyle = '#f3ead2'; ctx.fillRect(cx - 7 * k, y0 + 4 * k, 14 * k, 8 * k);
+  ctx.strokeStyle = '#6a2633'; ctx.lineWidth = Math.max(.8, k); ctx.beginPath(); ctx.moveTo(cx - 7 * k, y0 + 4 * k); ctx.lineTo(cx, y0 + 8.5 * k); ctx.lineTo(cx + 7 * k, y0 + 4 * k); ctx.stroke();
+  const mx = x0 - 14 * k;
+  ctx.fillStyle = '#3a2a30'; ctx.fillRect(mx - 1.2 * k, gy - 16 * k, 2.4 * k, 18 * k);
+  ctx.fillStyle = '#c4383e'; ctx.beginPath();
+  if (ctx.roundRect) ctx.roundRect(mx - 5 * k, gy - 29 * k, 10 * k, 13 * k, [4 * k, 4 * k, k, k]); else ctx.rect(mx - 5 * k, gy - 29 * k, 10 * k, 13 * k);
+  ctx.fill();
+  ctx.fillStyle = '#3a1218'; ctx.fillRect(mx - 3 * k, gy - 25 * k, 6 * k, 1.4 * k);
+  return { mail: [mx, gy - 30 * k], roof: [cx, ry] };
+}
+function envelope(ctx, x, y, ang, s, a) {
+  ctx.save(); ctx.translate(x, y); ctx.rotate(ang); ctx.globalAlpha = a;
+  const W = 14 * s, H = 9 * s;
+  ctx.fillStyle = '#f7f0de'; ctx.fillRect(-W / 2, -H / 2, W, H);
+  ctx.strokeStyle = 'rgba(122,92,60,.6)'; ctx.lineWidth = Math.max(.6, .8 * s);
+  ctx.beginPath(); ctx.moveTo(-W / 2, -H / 2); ctx.lineTo(0, H * .12); ctx.lineTo(W / 2, -H / 2); ctx.stroke();
+  if (s > 1.3) { ctx.fillStyle = '#c4383e'; ctx.fillRect(W / 2 - 4 * s, H / 2 - 3.4 * s, 2.6 * s, 2.2 * s); }
+  ctx.restore();
+}
+
+function drawScene(ctx, w, h, o, t) {
+  t = t || 0;
+  const R = rng(o.seed || 1), k = Math.max(.55, Math.min(1.4, h / 420));
+  const sky = o.sky || ['#0a1022', '#17264d', '#2c3d6c'];
+  const g = ctx.createLinearGradient(0, 0, 0, h);
+  g.addColorStop(0, sky[0]); g.addColorStop(.62, sky[1]); g.addColorStop(1, sky[2]);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, w, h);
+  if (o.glow) {
+    const G = o.glow, rad = Math.max(w, h) * .8, hg = ctx.createRadialGradient(w * G.x, h * G.y, 0, w * G.x, h * G.y, rad);
+    hg.addColorStop(0, G.c); hg.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = hg; ctx.fillRect(0, 0, w, h);
+  }
+  const n = Math.round((o.stars ?? 1) * w * h / 2600);
+  for (let i = 0; i < n; i++) {
+    const x = R() * w, y = R() * h * .78, s = R(), ph = R() * 6.283, sp = .6 + R() * 1.6;
+    const a = (.25 + s * .6) * (.55 + .45 * Math.sin(t * sp + ph)) * (1 - y / (h * .95));
+    if (a <= 0) continue;
+    ctx.fillStyle = `rgba(255,246,222,${a.toFixed(3)})`;
+    ctx.beginPath(); ctx.arc(x, y, s > .93 ? 1.6 : s > .7 ? 1.1 : .7, 0, 6.283); ctx.fill();
+    if (s > .97) {
+      ctx.strokeStyle = `rgba(255,246,222,${(a * .6).toFixed(3)})`; ctx.lineWidth = .8;
+      ctx.beginPath(); ctx.moveTo(x - 5, y); ctx.lineTo(x + 5, y); ctx.moveTo(x, y - 5); ctx.lineTo(x, y + 5); ctx.stroke();
+    }
+  }
+  const M = o.moon, mr = M.r * Math.min(w, h * 1.8), mx = M.x * w, my = (o.moonY ?? M.y) * h, gk = o.moonGlow ?? 1;
+  const mg = ctx.createRadialGradient(mx, my, mr * .8, mx, my, mr * 4.2);
+  mg.addColorStop(0, `rgba(255,232,170,${Math.min(.8, .32 * gk).toFixed(3)})`); mg.addColorStop(1, 'rgba(255,232,170,0)');
+  ctx.fillStyle = mg; ctx.beginPath(); ctx.arc(mx, my, mr * 4.2, 0, 6.283); ctx.fill();
+  const md = ctx.createRadialGradient(mx - mr * .3, my - mr * .3, mr * .1, mx, my, mr);
+  md.addColorStop(0, '#fff8e2'); md.addColorStop(1, M.pale ? '#e6dcc8' : '#f1d690');
+  ctx.fillStyle = md; ctx.beginPath(); ctx.arc(mx, my, mr, 0, 6.283); ctx.fill();
+  ctx.fillStyle = 'rgba(196,160,96,.22)';
+  [[-.3, -.2, .22], [.25, .1, .16], [-.05, .35, .12], [.35, -.35, .09]].forEach(([dx, dy, rr]) => { ctx.beginPath(); ctx.arc(mx + dx * mr, my + dy * mr, rr * mr, 0, 6.283); ctx.fill(); });
+  if (M.phase) {
+    ctx.save(); ctx.beginPath(); ctx.arc(mx, my, mr + .5, 0, 6.283); ctx.clip();
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(mx - mr * M.phase * 1.4, my - mr * .08, mr * 1.02, 0, 6.283); ctx.fill(); ctx.restore();
+  }
+  const hills = o.hills || HILLS, last = hills.length - 1;
+  for (let i = 0; i < last; i++) { drawHill(ctx, hills[i], w, h); pines(ctx, hills[i], hills[i + 1].c, w, h, R, Math.round(w / 70), k * .8); }
+  const front = hills[last];
+  drawHill(ctx, front, w, h);
+  let G0 = [w * .2, h * .85], roof = null;
+  if (o.house) {
+    const hx = o.house.x * w, gy = hillY(front, hx, w, h), hk = k * o.house.s;
+    pines(ctx, front, '#080d1a', w, h, R, Math.round(w / 120), k, { x: hx, r: 62 * hk });
+    const r = house(ctx, hx, gy, hk, o.house.lit); G0 = r.mail; roof = r.roof;
+  }
+  if (o.stairs && roof) {
+    const A = roof, C = [mx - mr * .15, my + mr * .95], B = [A[0] + (C[0] - A[0]) * .15, C[1] + (A[1] - C[1]) * .7], steps = 28;
+    for (let i = 1; i < steps; i++) {
+      const p = i / steps, [x, y] = qb(p, A, B, C), s = lerp(1, .45, p) * k, tw = .55 + .45 * Math.sin(t * 2 + i * .7);
+      ctx.fillStyle = `rgba(255,236,180,${((.25 + .5 * p) * tw).toFixed(3)})`; ctx.fillRect(x - 6 * s, y - 1.2 * s, 12 * s, 2.4 * s);
+    }
+  }
+  const P2 = [mx - mr * .72, my + mr * .72], P1 = [G0[0] - (P2[0] - G0[0]) * .12, P2[1] + (G0[1] - P2[1]) * .3];
+  if (o.trail) {
+    ctx.fillStyle = 'rgba(255,240,205,.22)';
+    for (let i = 2; i < 46; i++) { const [x, y] = qb(i / 46, G0, P1, P2); ctx.beginPath(); ctx.arc(x, y, .9, 0, 6.283); ctx.fill(); }
+  }
+  const list = o.envList || Array.from({ length: o.env || 0 }, (_, i) => ({ p: ((i + .35) / o.env + t * (o.envSpeed || 0)) % 1 }));
+  for (const e of list) {
+    const p = e.p, [x, y] = qb(p, G0, P1, P2), [dx, dy] = qt(p, G0, P1, P2), s = (e.s || 1) * lerp(1.1, .5, p) * k;
+    if (e.spark) {
+      for (let j = 1; j < 14; j++) {
+        const q = p - j * .012; if (q <= 0) break;
+        const [sx, sy] = qb(q, G0, P1, P2);
+        ctx.fillStyle = `rgba(255,226,150,${(.55 * (1 - j / 14)).toFixed(3)})`;
+        ctx.beginPath(); ctx.arc(sx + Math.sin(t * 9 + j) * 2, sy + Math.cos(t * 7 + j) * 2, 1.5 * k * (1 - j / 16), 0, 6.283); ctx.fill();
+      }
+    }
+    envelope(ctx, x, y, Math.atan2(dy, dx) * .35, s, Math.min(1, p * 10, (1 - p) * 7));
+  }
+}
+
+const TE = 24;
+function drawTeaser(ctx, w, h, tm) {
+  const rise = ease(clamp01(tm / 6)), fly = clamp01((tm - 6) / 10);
+  const glow = 1 + 1.4 * Math.max(0, Math.sin(Math.PI * clamp01((tm - 15.5) / 4)));
+  drawScene(ctx, w, h, Object.assign({}, SC.teaser, {
+    moonY: lerp(.95, .3, rise), moonGlow: glow, trail: fly > 0,
+    envList: fly > 0 && fly < 1 ? [{ p: ease(fly), s: 1.7, spark: true }] : []
+  }), tm);
+  const S = w / 800;
+  const txt = (str, size, alpha, y, font) => {
+    if (alpha <= 0) return;
+    ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = '#f3ead2'; ctx.font = `${size}px ${font}`;
+    ctx.textBaseline = 'alphabetic'; ctx.fillText(str, w * .07, y); ctx.restore();
+  };
+  const fade = (a, b, c, d) => clamp01((tm - a) / (b - a)) * (1 - clamp01((tm - c) / (d - c)));
+  txt('보름밤 00:00', 36 * S, fade(.6, 1.8, 4.6, 5.6), h * .22, DISPLAY);
+  txt('편지 한 통, 384,400km', 32 * S, fade(9, 10.5, 14.5, 15.8), h * .22, DISPLAY);
+  const e = clamp01((tm - 19) / 1.5);
+  if (e > 0) {
+    ctx.fillStyle = `rgba(13,20,36,${(.62 * e).toFixed(3)})`; ctx.fillRect(0, 0, w, h);
+    txt('달빛 우체국', 68 * S, e, h * .52, DISPLAY);
+    txt('단편 애니메이션 · 2027년 봄', 20 * S, clamp01((tm - 20) / 1.2), h * .52 + 40 * S, BODY);
+  }
+}
+
+/* ---------- canvas plumbing ---------- */
+function prep(cv) {
+  const r = cv.getBoundingClientRect(), w = Math.round(r.width), h = Math.round(r.height);
+  if (!w || !h) return null;
+  const d = Math.min(2, window.devicePixelRatio || 1), W = Math.round(w * d), H = Math.round(h * d);
+  if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+  const ctx = cv.getContext('2d'); ctx.setTransform(d, 0, 0, d, 0, 0);
+  return { ctx, w, h };
+}
+function renderStatic() {
+  $$('canvas[data-scene]').forEach(cv => { const r = prep(cv); if (r && SC[cv.dataset.scene]) drawScene(r.ctx, r.w, r.h, SC[cv.dataset.scene], 0); });
+  if (!cur || cur.id !== 'teaser') teaserPoster();
+}
+
+const heroC = $('#hero-c'); let heroVis = true, heroRaf = 0;
+function heroFrame(ts) {
+  heroRaf = 0;
+  const r = prep(heroC); if (r) drawScene(r.ctx, r.w, r.h, SC.hero, reduce ? 0 : ts / 1000);
+  if (!reduce && heroVis && !document.hidden) heroRaf = requestAnimationFrame(heroFrame);
+}
+const heroStart = () => { if (!heroRaf) heroRaf = requestAnimationFrame(heroFrame); };
+if ('IntersectionObserver' in window) new IntersectionObserver(es => { heroVis = es[0].isIntersecting; if (heroVis) heroStart(); }).observe(heroC);
+document.addEventListener('visibilitychange', () => { if (!document.hidden && heroVis) heroStart(); });
+
+/* ---------- music box ---------- */
+const NOTE = { C: 0, 'C#': 1, D: 2, 'D#': 3, E: 4, F: 5, 'F#': 6, G: 7, 'G#': 8, A: 9, 'A#': 10, B: 11 };
+const midi = n => { const m = /^([A-G]#?)(\d)$/.exec(n); return 12 * (+m[2] + 1) + NOTE[m[1]]; };
+const hz = m => 440 * Math.pow(2, (m - 69) / 12);
+const parse = s => s.trim().split(/\s+/).filter(x => x !== '|').map(tok => { const [n, d] = tok.split('/'); return { m: n === 'r' ? null : midi(n), d: +d }; });
+const TRACKS = [
+  { bpm: 92, beats: 3,
+    mel: 'E5/1 G5/1 C6/1 | B5/2 G5/1 | A5/1 F5/1 A5/1 | G5/3 | E5/1 G5/1 C6/1 | D6/2 C6/1 | B5/1 A5/1 B5/1 | C6/3 | A5/1 C6/1 E6/1 | D6/2 C6/1 | B5/1 G5/1 E5/1 | F5/3 | E5/1 D5/1 E5/1 | G5/2 C6/1 | B5/1.5 D6/0.5 B5/1 | C6/3',
+    bass: 'C3 G2 F2 G2 C3 G2 G2 C3 A2 G2 E2 F2 C3 C3 G2 C3' },
+  { bpm: 80, beats: 4,
+    mel: 'D5/0.5 E5/0.5 F#5/0.5 A5/0.5 B5/1 A5/1 | F#5/2 E5/1 D5/1 | E5/0.5 F#5/0.5 A5/0.5 B5/0.5 D6/1 B5/1 | A5/4 | B5/0.5 D6/0.5 E6/0.5 F#6/0.5 E6/1 D6/1 | B5/2 A5/1 F#5/1 | E5/1 F#5/1 A5/1 E5/1 | D5/4 | F#5/1 A5/1 D6/1 E6/1 | F#6/2 E6/1 D6/1 | B5/1 A5/1 F#5/1 E5/1 | D5/4',
+    bass: 'D3 B2 G2 A2 G2 B2 A2 D3 D3 B2 G2 D3' },
+  { bpm: 108, beats: 4, stamp: true,
+    mel: ('F5/0.5 A5/0.5 C6/0.5 A5/0.5 F5/1 r/1 | G5/0.5 A5/0.5 A#5/0.5 G5/0.5 E5/1 r/1 | F5/0.5 A5/0.5 C6/0.5 D6/0.5 C6/1 A5/1 | G5/2 r/2 | A5/0.5 A#5/0.5 C6/0.5 A5/0.5 G5/0.5 A5/0.5 F5/1 | D5/0.5 E5/0.5 F5/0.5 G5/0.5 A5/1 r/1 | G5/0.5 G5/0.5 A5/0.5 G5/0.5 E5/0.5 C5/0.5 E5/1 | F5/2 r/2 | ').repeat(2),
+    bass: 'F2 C3 F2 C3 F2 D3 C3 F2 F2 C3 F2 C3 F2 D3 C3 F2' }
+];
+const trackLen = (tr, bars) => { const nb = bars || tr.bass.split(/\s+/).length; return nb * tr.beats * 60 / tr.bpm + (bars ? 0 : 1.5); };
+const fmt = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+let AC = null, OUT = null;
+function audio() {
+  if (!AC) {
+    const C = window.AudioContext || window.webkitAudioContext; if (!C) return null;
+    try { AC = new C(); } catch (e) { return null; }
+    OUT = AC.createGain(); OUT.gain.value = .8;
+    const lp = AC.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 5200;
+    const dl = AC.createDelay(1); dl.delayTime.value = .31;
+    const fb = AC.createGain(); fb.gain.value = .28;
+    const wet = AC.createGain(); wet.gain.value = .22;
+    OUT.connect(lp); lp.connect(AC.destination); lp.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wet); wet.connect(AC.destination);
+  }
+  if (AC.state === 'suspended') AC.resume();
+  return AC;
+}
+function bell(bus, t, f, dur, v, list) {
+  const g = AC.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(v, t + .006); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+  const o = AC.createOscillator(); o.type = 'sine'; o.frequency.value = f; o.connect(g);
+  const g2 = AC.createGain(); g2.gain.setValueAtTime(.0001, t); g2.gain.exponentialRampToValueAtTime(.22, t + .004); g2.gain.exponentialRampToValueAtTime(.0001, t + dur * .25);
+  const o2 = AC.createOscillator(); o2.type = 'sine'; o2.frequency.value = f * 3.01; o2.connect(g2); g2.connect(g);
+  g.connect(bus); o.start(t); o2.start(t); o.stop(t + dur + .05); o2.stop(t + dur + .05); list.push(o, o2);
+}
+function pluck(bus, t, f, dur, v, list) {
+  const g = AC.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(v, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+  const o = AC.createOscillator(); o.type = 'triangle'; o.frequency.value = f; o.connect(g); g.connect(bus); o.start(t); o.stop(t + dur + .05); list.push(o);
+}
+function thump(bus, t, list) {
+  const g = AC.createGain(); g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.5, t + .005); g.gain.exponentialRampToValueAtTime(.0001, t + .22);
+  const o = AC.createOscillator(); o.type = 'sine'; o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(48, t + .14);
+  o.connect(g); g.connect(bus); o.start(t); o.stop(t + .25); list.push(o);
+}
+function schedule(tr, barLimit) {
+  if (!audio()) return null;
+  const bus = AC.createGain(); bus.connect(OUT);
+  const list = [], spb = 60 / tr.bpm, t0 = AC.currentTime + .08;
+  const bass = tr.bass.split(/\s+/).map(midi), nBars = Math.min(barLimit || Infinity, bass.length), endBeat = nBars * tr.beats;
+  let b = 0;
+  for (const n of parse(tr.mel)) {
+    if (b >= endBeat - 1e-6) break;
+    if (n.m !== null) bell(bus, t0 + b * spb, hz(n.m), Math.max(.9, n.d * spb * 1.6), .16, list);
+    b += n.d;
+  }
+  for (let i = 0; i < nBars; i++) {
+    const t = t0 + i * tr.beats * spb, r = bass[i];
+    if (tr.stamp) { pluck(bus, t, hz(r), spb * .7, .13, list); pluck(bus, t + spb, hz(r + 7), spb * .6, .08, list); pluck(bus, t + 2 * spb, hz(r), spb * .6, .09, list); thump(bus, t + 3 * spb, list); }
+    else if (tr.beats === 3) { pluck(bus, t, hz(r), tr.beats * spb * .9, .13, list); bell(bus, t + spb, hz(r + 19), .6, .045, list); bell(bus, t + 2 * spb, hz(r + 24), .6, .04, list); }
+    else { pluck(bus, t, hz(r), tr.beats * spb * .9, .13, list); bell(bus, t + spb, hz(r + 24), .8, .035, list); pluck(bus, t + 2 * spb, hz(r + 7), spb * 1.6, .08, list); }
+  }
+  return { bus, list, t0, len: trackLen(tr, barLimit) };
+}
+function silence(h) {
+  if (!h || !h.bus || !AC) return;
+  const now = AC.currentTime;
+  try { h.bus.gain.cancelScheduledValues(now); h.bus.gain.setValueAtTime(h.bus.gain.value, now); h.bus.gain.linearRampToValueAtTime(0, now + .12); } catch (e) {}
+  h.list.forEach(o => { try { o.stop(now + .15); } catch (e) {} });
+  setTimeout(() => { try { h.bus.disconnect(); } catch (e) {} }, 400);
+}
+
+let cur = null;
+function stopCurrent() { if (!cur) return; const c = cur; cur = null; cancelAnimationFrame(c.raf); silence(c.h); c.onStop(); }
+
+$$('.track').forEach((el, i) => {
+  const tr = TRACKS[i], btn = $('.play', el), lbl = $('.lbl', el), bar = $('.bar i', el), time = $('.time', el), total = trackLen(tr);
+  const reset = () => { btn.setAttribute('aria-pressed', 'false'); lbl.textContent = '재생'; bar.style.width = '0%'; time.textContent = `0:00 / ${fmt(total)}`; };
+  reset();
+  btn.addEventListener('click', () => {
+    if (cur && cur.id === i) { stopCurrent(); return; }
+    stopCurrent();
+    const h = schedule(tr);
+    if (!h) { time.textContent = '이 브라우저에서는 소리를 낼 수 없어요'; return; }
+    btn.setAttribute('aria-pressed', 'true'); lbl.textContent = '정지';
+    const c = { id: i, h, onStop: reset, raf: 0 }; cur = c;
+    const tick = () => {
+      if (cur !== c) return;
+      const t = Math.max(0, AC.currentTime - h.t0), p = Math.min(1, t / h.len);
+      bar.style.width = (p * 100).toFixed(2) + '%'; time.textContent = `${fmt(t)} / ${fmt(total)}`;
+      if (p >= 1) { cur = null; reset(); return; }
+      c.raf = requestAnimationFrame(tick);
+    };
+    c.raf = requestAnimationFrame(tick);
+  });
+});
+
+/* ---------- teaser ---------- */
+const screen = $('#screen'), tc = $('#teaser-c'), tbtn = $('#t-play'), tlbl = $('.lbl', tbtn), tbar = $('#t-bar i'), ttime = $('#t-time');
+function teaserPoster() { const r = prep(tc); if (r) drawTeaser(r.ctx, r.w, r.h, 12); }
+function tReset() {
+  screen.classList.remove('playing'); tbtn.setAttribute('aria-pressed', 'false'); tlbl.textContent = '티저 재생';
+  $('#t-big').setAttribute('aria-label', '티저 재생'); tbar.style.width = '0%'; ttime.textContent = `0:00 / ${fmt(TE)}`; teaserPoster();
+}
+function tToggle() {
+  if (cur && cur.id === 'teaser') { stopCurrent(); return; }
+  stopCurrent();
+  const h = schedule(TRACKS[1], 8);
+  const start = performance.now();
+  const clock = h ? () => AC.currentTime - h.t0 : () => (performance.now() - start) / 1000;
+  screen.classList.add('playing'); tbtn.setAttribute('aria-pressed', 'true'); tlbl.textContent = '정지'; $('#t-big').setAttribute('aria-label', '티저 정지');
+  const c = { id: 'teaser', h, onStop: tReset, raf: 0 }; cur = c;
+  const tick = () => {
+    if (cur !== c) return;
+    const tm = Math.max(0, clock());
+    if (tm >= TE) { cur = null; tReset(); return; }
+    const r = prep(tc); if (r) drawTeaser(r.ctx, r.w, r.h, tm);
+    tbar.style.width = (tm / TE * 100).toFixed(2) + '%'; ttime.textContent = `${fmt(tm)} / ${fmt(TE)}`;
+    c.raf = requestAnimationFrame(tick);
+  };
+  c.raf = requestAnimationFrame(tick);
+}
+tbtn.addEventListener('click', tToggle);
+$('#t-big').addEventListener('click', tToggle);
+
+/* ---------- postcards ---------- */
+const POST = {
+  p1: ['언덕 위 우체국', '보름밤 자정, 창구에 불이 켜졌다.', '2026.09.27'],
+  p2: ['자정의 창구', '모카 국장이 소인을 하나 찍고 다시 잠들었다.', '2026.08.28'],
+  p3: ['384,400km', '여기서 달까지. 하루의 자전거로 네 시간.', '2026.07.29'],
+  p4: ['서른 번째 계단', '하루가 또 새 길을 찾았다.', '2026.06.29'],
+  p5: ['초승달 휴무일', '오늘은 문을 열지 않습니다.', '2026.10.13'],
+  p6: ['새벽 네 시', '마지막 편지가 달에 닿았다. 창구를 닫는다.', '2026.09.27']
+};
+const lb = $('#lb'), lbc = $('#lb-c');
+$$('.pc').forEach(b => b.addEventListener('click', () => {
+  const key = b.dataset.key, [t, n, d] = POST[key];
+  $('#lb-t').textContent = t; $('#lb-n').textContent = n; $('#lb-d').textContent = d + ' 소인';
+  lbc.dataset.scene = key;
+  if (typeof lb.showModal === 'function') lb.showModal(); else lb.setAttribute('open', '');
+  requestAnimationFrame(() => { const r = prep(lbc); if (r) drawScene(r.ctx, r.w, r.h, SC[key], 0); });
+}));
+const closeLb = () => { if (typeof lb.close === 'function') lb.close(); else lb.removeAttribute('open'); };
+$('#lb-x').addEventListener('click', closeLb);
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+
+/* ---------- copy ---------- */
+const msg = $('#copy-msg');
+$('#copy').addEventListener('click', () => {
+  const text = $('#mail').textContent.trim();
+  const fallback = () => { const r = document.createRange(); r.selectNodeContents($('#mail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); msg.textContent = '주소를 선택해 두었어요. 복사해서 쓰세요.'; };
+  try { navigator.clipboard.writeText(text).then(() => { msg.textContent = '복사했어요.'; }, fallback); } catch (e) { fallback(); }
+});
+
+/* ---------- boot ---------- */
+renderStatic(); heroStart();
+let rt = 0;
+const onResize = () => { clearTimeout(rt); rt = setTimeout(() => { renderStatic(); if (reduce) heroStart(); }, 150); };
+if ('ResizeObserver' in window) new ResizeObserver(onResize).observe(document.body); else addEventListener('resize', onResize);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (!cur || cur.id !== 'teaser') teaserPoster(); });
+})();
+</script>
+</body>
+</html>
